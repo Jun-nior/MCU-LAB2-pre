@@ -229,13 +229,14 @@ int counter=50, num=1;
 void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim ) {
 	if (counter>0) {
 		counter--;
-	} else if (counter<=0) {
+		if (counter<=0) {
 		num=3-num;
 		display7SEG(num);
 		HAL_GPIO_TogglePin(PA7_GPIO_Port, PA7_Pin);
 		HAL_GPIO_TogglePin(PA6_GPIO_Port, PA6_Pin);
 		HAL_GPIO_TogglePin(PA5_GPIO_Port, PA5_Pin);
 		counter=50;
+		}
 	}
 }
 /* USER CODE END 4 */
