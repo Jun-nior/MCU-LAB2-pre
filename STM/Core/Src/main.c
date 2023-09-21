@@ -234,6 +234,7 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim ) {
 		display7SEG(num);
 		HAL_GPIO_TogglePin(PA7_GPIO_Port, PA7_Pin);
 		HAL_GPIO_TogglePin(PA6_GPIO_Port, PA6_Pin);
+		HAL_GPIO_TogglePin(PA5_GPIO_Port, PA5_Pin);
 		counter=50;
 	}
 }
