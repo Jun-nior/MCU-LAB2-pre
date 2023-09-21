@@ -4,6 +4,7 @@
  *  Created on: Sep 21, 2023
  *      Author: Vostro
  */
+
 #include "software_timer.h"
 
 int timer1_counter=0;
