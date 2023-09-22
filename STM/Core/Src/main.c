@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "7seg.h"
-
+#include "software_timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,18 +90,25 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT (& htim2 ) ;
+  HAL_TIM_Base_Start_IT (&htim2) ;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_GPIO_WritePin(PA7_GPIO_Port, PA7_Pin, SET);
+  setTimer1(50);
+  int num=1;
+  HAL_GPIO_WritePin(PA7_GPIO_Port,PA7_Pin, SET);
   display7SEG(1);
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+    if (timer1_flag==1) {
+    	setTimer1(50);
+    	num=3-num;
+    	HAL_GPIO_TogglePin(PA6_GPIO_Port, PA6_Pin);
+    	HAL_GPIO_TogglePin(PA7_GPIO_Port, PA7_Pin);
+    	HAL_GPIO_TogglePin(PA5_GPIO_Port, PA5_Pin);
+    	display7SEG(num);
+    }
   }
   /* USER CODE END 3 */
 }
@@ -225,19 +232,8 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-int counter=50, num=1;
 void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim ) {
-	if (counter>0) {
-		counter--;
-		if (counter<=0) {
-		num=3-num;
-		display7SEG(num);
-		HAL_GPIO_TogglePin(PA7_GPIO_Port, PA7_Pin);
-		HAL_GPIO_TogglePin(PA6_GPIO_Port, PA6_Pin);
-		HAL_GPIO_TogglePin(PA5_GPIO_Port, PA5_Pin);
-		counter=50;
-		}
-	}
+	timerRun();
 }
 /* USER CODE END 4 */
 
